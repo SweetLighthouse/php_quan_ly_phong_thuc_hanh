@@ -2,7 +2,7 @@
 
 namespace SWLH\core;
 
-class model {
-    static $db;
+abstract class model {
+    static $conn;
 }
-model::$db = new \mysqli('localhost', 'root', '', 'swlh_db');
+model::$conn = new \mysqli('localhost', 'root', '', 'swlh_db');

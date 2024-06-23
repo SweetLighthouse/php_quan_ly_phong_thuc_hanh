@@ -1,40 +1,15 @@
 <?php
 
-// cái cấu trúc của tôi, tôi lưu nó thành
-// \SWLH\controller
-// \SWLH\model
-// \SWLH\view
-// \SWLH\code
-// \SWLH như là chữ ký của tôi thôi.
-// cái quan tâm là mô hình MVC
-
 namespace SWLH;
 
-
-
-
-# đây là index.php
-# URL dc điểu hướng nằm trong $_SERVER['REDIRECT_URL']
-
-
-# nếu đã có session r thì ko phải start lại nữa, ko thì start
-# ông biết session chứ?
 if (session_status() == PHP_SESSION_NONE)
     session_start();
 
-// echo var_dump($_SESSION);
-// echo "<br><br>";
+// echo var_dump($_SESSION) . "<br>";
+// echo var_dump(session_id()) . "<br>";
+// echo var_dump($_COOKIE) . "<br>";
+// session_destroy();
 
-# biết thằng này chứ? spl_autoload_register()
-# cái này là mã chạy, mỗi khi có một class xuất hiện
-vd: 
-
-
-
-
-
-
-// tóm lại là 
 spl_autoload_register(function ($class_name) {
     $class_name = str_replace('SWLH\\', '', $class_name); // bỏ \SWLH ở đầu
     $class_name = explode('\\', $class_name); // xé nó thành mảng
@@ -48,30 +23,52 @@ spl_autoload_register(function ($class_name) {
     require_once $class_name; // và require nó
 });
 
-
-
-// must login before everything else
-if (!controller\user::islogin() && !in_array($_SERVER['REDIRECT_URL'], ['/login', '/register'])) {
-    header('Location: /login'); // redirect người dùng về trang /login
+// die(var_dump(controller\home::is_login()));
+if (!controller\home::is_login()) {
+    switch ($_SERVER['REDIRECT_URL']) {
+        case '/login':
+            controller\home::login();
+            break;
+        case '/register':
+            header('Location: /register/user');
+            break;
+        case '/register/user':
+            controller\user::register();
+            break;
+        case '/register/owner':
+            controller\owner::register();
+            break;
+        default:
+            header('Location: /login');
+            break;
+    }
 }
+
+// echo "reach here";
+$result = model\account::find_by_token();
+if (!$result) {
+    controller\home::logout();
+    die('<script>alert("Thông tin tài khoản lưu trên máy của bạn không hợp lệ. Hãy đăng nhập lại."); window.location.href = "/login"</script>');
+}
+// else {
+//     echo var_dump($result);
+// }
 
 // route
 switch ($_SERVER['REDIRECT_URL']) {
     case '/':
         controller\home::index();
         break;
-    case '/login':
-        controller\user::login();
-        break;
-    case '/register':
-        controller\user::register();
+    case '/account':
+        controller\home::account();
         break;
     case '/logout':
-        controller\user::logout();
+        controller\home::logout();
+        header('Location: /');
         break;
-    case '/room':
-        controller\room::index();
-        break;
+    // case '/room':
+    //     controller\room::index();
+    //     break;
     default:
-        die('unknown path.');
+        \SWLH\core\controller::render('404.php', ['message' => 'Đường dẫn không tồn tại.']);
 }

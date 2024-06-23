@@ -1,13 +1,3 @@
 RewriteEngine on
-# dòng này là bật chức năng điều hướng URL
-
 RewriteCond %{REQUEST_URI} !^/public/
-# nếu URL mà không bắt đầu bằng /public
-
 RewriteRule ^ index.php
-# thì điểu tất cả chúng nó về index.php
-
-# vd nhé
-# thấy thư mục public ko bị đả động khi tôi điền vào public chứ
-# còn với tất cả các URL còn lại:
-# sang index

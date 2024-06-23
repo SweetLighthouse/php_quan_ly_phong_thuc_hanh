@@ -2,19 +2,19 @@
 
 namespace SWLH\controller;
 
-class user extends \SWLH\core\controller
+class owner extends \SWLH\core\controller
 {
     static function register()
     {
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
-                self::render('register for user.php');
+                self::render('register for owner.php');
                 break;
             case 'POST':
-                if(!\SWLH\model\user::validate($_POST['name'], $_POST['password']))
-                    self::render('register for user.php', ['message' => 'Dữ liệu đăng ký không phù hợp.']);
+                if(!\SWLH\model\owner::validate($_POST['name'], $_POST['password']))
+                    self::render('register for owner.php', ['message' => 'Dữ liệu đăng ký không phù hợp.']);
 
-                $new_account = \SWLH\model\user::add(
+                $new_account = \SWLH\model\owner::add(
                     $_POST['name'], [
                         'password' => $_POST['password'],
                         'birth' => $_POST['birth'],
@@ -24,7 +24,7 @@ class user extends \SWLH\core\controller
                     ]
                 );
                 if (!$new_account) 
-                    self::render('register for user.php', ['message' => 'Tên tài khoản đã tồn tại.']);
+                    self::render('register for owner.php', ['message' => 'Tên tài khoản đã tồn tại.']);
 
                 header('Location: /login');
                 break;
