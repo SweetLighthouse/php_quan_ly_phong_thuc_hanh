@@ -19,24 +19,26 @@ class computer extends \SWLH\core\controller
     }
     static function update()
     {
-        $id = $_POST['room_id'] ?? $_GET['id'];
+        echo var_dump($_POST);
+        $id = $_POST['computer_id'] ?? $_GET['id'] ?? '';
         $allowed_to_modify = false;
+        if($id == '') static::render('404.php', ['message'=> 'Không thể để trống ID.']);
         $edited_room = \SWLH\model\computer::read($id);
         $rooms = \SWLH\model\room::read_by_owner_id($_SESSION['account_id']);
-        foreach ($rooms as $room) if($edited_room['room_id'] == $room['room_id']) $allowed_to_modify = true;
+        foreach ($rooms as $room) if($edited_room['computer_room_id'] == $room['room_id']) $allowed_to_modify = true;
         if(!$allowed_to_modify) static::render('404.php', ['message' => 'Bạn không có đủ thẩm quyền để sửa máy ở vào phòng đã cho.']);
         switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
             $data = $edited_room;
-            $data['room_list'] = $rooms;
-            static::render('edit computer.php', $data);
+            $data['rooms'] = $rooms;
+            static::render('update computer.php', $data);
             break;
         case 'POST':
             if(!\SWLH\model\computer::update($_POST)) {
                 $_POST['message'] = 'Có lỗi xảy ra.';
-                static::render('edit computer.php', $_POST);
+                static::render('update computer.php', $_POST);
             }
-            header("Location: /room?id=$_POST[room_id]");
+            header("Location: /room?id=$_POST[computer_id]");
             break;
         }
     }

@@ -29,7 +29,7 @@ class computer extends \SWLH\core\model
     static function update(array $data)
     {
         $stmt = static::$conn->prepare("update computers set computer_name = ?, computer_ram = ?, computer_cpu = ?, computer_vga = ?, computer_monitor = ?, computer_note = ?, computer_availability = ?, computer_room_id = ? where computer_id = ?");
-        $stmt->bind_param("ssssssii", 
+        $stmt->bind_param("ssssssiii", 
             $data['computer_name'], 
             $data['computer_ram'], 
             $data['computer_cpu'], 
