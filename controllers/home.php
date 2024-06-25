@@ -6,6 +6,6 @@ class home extends \SWLH\core\controller
 {
     static function index()
     {
-        self::render("index.php");
+        static::render("index.php");
     }
 }

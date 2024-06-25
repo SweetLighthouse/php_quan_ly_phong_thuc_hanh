@@ -4,38 +4,38 @@ namespace SWLH\model;
 
 abstract class token extends \SWLH\core\model
 {
-    static function set($user_id)
+    static function update($account_id)
     {
-        $token = bin2hex(random_bytes(30));
-        $stmt = static::$conn->prepare('update users set token = ? where id = ? limit 1');
-        $stmt->bind_param('ss', $token, $user_id);
+        $account_token = bin2hex(random_bytes(30));
+        $stmt = static::$conn->prepare('update accounts set account_token = ? where account_id = ? limit 1');
+        $stmt->bind_param('ss', $account_token, $account_id);
         $stmt->execute();
         if ($stmt->affected_rows == 0)
             return false;
-        $_SESSION['token'] = $token;
+        $_SESSION['account_token'] = $account_token;
         return true;
     }
-    static function get_current_user()
+    static function read_current_account()
     {
-        $stmt = static::$conn->prepare('select * from users where token = ? limit 1');
-        $stmt->bind_param('s', $_SESSION['token']);
+        $stmt = static::$conn->prepare('select * from accounts where account_token = ? limit 1');
+        $stmt->bind_param('s', $_SESSION['account_token']);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc() ?? [];
     }
     static function validate()
     {
-        $user = static::get_current_user();
-        if(!$user) return false;
-        if($_SESSION['id'] && $_SESSION['id'] != $user['id']) return false;
+        $current_account = static::read_current_account();
+        if(!$current_account) return false;
+        if($_SESSION['account_id'] && $_SESSION['account_id'] != $current_account['account_id']) return false;
         return true;
     }
-    static function clear()
+    static function delete()
     {
-        $stmt = static::$conn->prepare('update users set token = "" where token = ? limit 1');
-        $stmt->bind_param('s', $_SESSION['token']);
+        $stmt = static::$conn->prepare('update accounts set account_token = "" where account_token = ? limit 1');
+        $stmt->bind_param('s', $_SESSION['account_token']);
         $stmt->execute();
-        if ($stmt->affected_rows == 0)
-            return false;
+        session_unset();
+        if ($stmt->affected_rows == 0) return false;
         return true;
     }
 }

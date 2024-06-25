@@ -1,8 +1,8 @@
 <a href="/"><h2>Chương trình quản lý phòng thực hành</h2></a>
-<?php if (isset($_SESSION['token'])): ?>
-    Xin chào, <a href="/account"><?= $_SESSION['name'] ?></a><span>.</span>
+<?php if (isset($_SESSION['account_token'])): ?>
+    Xin chào, <a href="/account"><?= $_SESSION['account_name'] ?></a><span>.</span>
     <a href="/rooms">Phòng bạn quản lý</a>
-    <a href="/rooms/all">Xem các phòng</a>
+    <a href="/rooms/other">Xem các phòng khác</a>
     <a href="/accounts">Xem các người dùng</a>
     <a href="/logout">Đăng xuất</a>
 <?php else: ?>

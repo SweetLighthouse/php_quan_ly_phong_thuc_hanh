@@ -10,60 +10,58 @@ class room extends \SWLH\core\model
     // so I save user id in session and use it.
     // token is authenticated at index.php, once every request.
 
-    static function add(array $data)
+    static function create(array $data)
     {
-        $stmt = self::$conn->prepare("insert into rooms (name, position, description, availability, owner_id) values (?, ?, ?, ?, ?)");
-        $stmt->bind_param(
-            "sssis",
-            $data['name'],
-            $data['position'],
-            $data['description'],
-            $data['availability'],
-            $_SESSION['id'] // \SWLH\model\token::get()['id']
+        $stmt = static::$conn->prepare("insert into rooms (room_name, room_position, room_description, room_availability, room_owner_id) values (?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssis",
+            $data['room_name'],
+            $data['room_position'],
+            $data['room_description'],
+            $data['room_availability'],
+            $data['room_owner_id'],
         );
         return $stmt->execute();
     }
     static function update(array $data)
     {
-        $stmt = self::$conn->prepare("update rooms set name = ?, position = ?, description = ?, availability = ? where id = ? and owner_id = ?");
-        $stmt->bind_param("ssssss", 
-            $data['name'], 
-            $data['position'], 
-            $data['description'], 
-            $data['availability'], 
-            $data['id'], 
-            $_SESSION['id'] // \SWLH\model\token::get()['id']
+        $stmt = static::$conn->prepare("update rooms set room_name = ?, room_position = ?, room_description = ?, room_availability = ?, room_owner_id = ? where room_id = ?");
+        $stmt->bind_param("sssiss", 
+            $data['room_name'], 
+            $data['room_position'], 
+            $data['room_description'], 
+            $data['room_availability'], 
+            $data['room_owner_id'], 
+            $data['room_id'], 
         );
         return $stmt->execute();
     }
-    static function delete($id)
+    static function delete($room_id)
     {
-        if (!isset($id)) return false;
-        $stmt = self::$conn->prepare("delete from rooms where id = ? and owner_id = ? limit 1");
-        $stmt->bind_param("ss", $id, $_SESSION['id'] /* \SWLH\model\token::get()['id'] */);
+        if (!isset($room_id)) return false;
+        $stmt = static::$conn->prepare("delete from rooms where room_id = ? limit 1");
+        $stmt->bind_param("i", $room_id);
         return $stmt->execute();
     }
-
     // everyone can view a room, no need to authenticate.
-    static function get($id) // view single room
+    static function read($room_id) // view single room
     {
-        if (!isset($id)) return false;
-        $stmt = self::$conn->prepare("select * from rooms where id = ? limit 1");
-        $stmt->bind_param("i", $id);
+        if (!isset($room_id)) return false;
+        $stmt = static::$conn->prepare("select * from rooms where room_id = ? limit 1");
+        $stmt->bind_param("i", $room_id);
         $stmt->execute();
         return $stmt->get_result()->fetch_assoc();
     }
-    static function get_by_owner($owner_id = null)
+    static function read_by_owner_id($owner_id)
     {
-        if (!isset($owner_id)) $owner_id = $_SESSION['id'];
-        $stmt = self::$conn->prepare("select * from rooms where rooms.owner_id = ?");
+        if (!isset($owner_id)) $owner_id = $_SESSION['account_id'];
+        $stmt = static::$conn->prepare("select * from rooms where room_owner_id = ?");
         $stmt->bind_param("i", $owner_id);
         $stmt->execute();
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
-    static function get_all()
+    static function read_all()
     {
-        return self::$conn->query("select * from rooms")->fetch_all(MYSQLI_ASSOC);
+        return static::$conn->query("select * from rooms")->fetch_all(MYSQLI_ASSOC);
     }
 
 

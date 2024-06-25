@@ -10,23 +10,19 @@
 
 <body>
     <?php require_once ('stuff/header.php'); ?>
-
-    <?= $data['message'] ?? '' ?>
+    <h2>Đăng nhập vào tài khoản của bạn.</h2>
+    
     <form action="/login" method="post">
-        <h2>Đăng nhập</h2>
-
-        <label for="name">Tài khoản: </label>
-        <input type="text" name="name" id="name" autofocus>
+        <label for="account_name">Tài khoản: </label>
+        <input type="text" name="account_name" id="account_name" value="<?= $data['account_name'] ?? '' ?>" autofocus>
         <br><br>
-
-        <label for="password">Mật khẩu: </label>
-        <input type="password" name="password" id="password">
+        <label for="account_password">Mật khẩu: </label>
+        <input type="password" name="account_password" id="account_password">
         <br><br>
-
-        <input type="submit" value="Đăng nhập">
+        <input type="submit" value="Đăng nhập"><br>
     </form>
+    <?= $data['message'] ?? '' ?>
     <?php require_once ('stuff/footer.php'); ?>
-
 </body>
 
 </html>

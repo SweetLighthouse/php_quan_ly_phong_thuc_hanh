@@ -9,7 +9,7 @@ if (session_status() == PHP_SESSION_NONE)
 // echo var_dump(session_id()) . "<br>";
 // echo var_dump($_COOKIE) . "<br>";
 // session_destroy();
-
+// die("asdf");
 spl_autoload_register(function ($class_name) {
     $class_name = str_replace('SWLH\\', '', $class_name); // bỏ \SWLH ở đầu
     $class_name = explode('\\', $class_name); // xé nó thành mảng
@@ -27,7 +27,7 @@ if($_SERVER['REDIRECT_URL'] != '/') $_SERVER['REDIRECT_URL'] = rtrim($_SERVER['R
 
 // kiểm tra token của người dùng mỗi lần request đến trang.
 if (!model\token::validate()) {
-    model\token::clear(); // nếu token ko hợp lệ thì huỷ token.
+    model\token::delete(); // nếu token ko hợp lệ thì huỷ token.
     switch ($_SERVER['REDIRECT_URL']) { // đăng nhập lại.
         case '/login':
             controller\account::login();
@@ -51,10 +51,10 @@ switch ($_SERVER['REDIRECT_URL']) {
         controller\home::index(); // trang chủ
         break;
     case '/account':
-        controller\account::view(); // xem tài khoản
+        controller\account::read(); // xem tài khoản
         break;
-    case '/account/edit':
-        controller\account::edit(); // sửa tài khoản
+    case '/account/update':
+        controller\account::update(); // sửa tài khoản
         break;
     case '/account/delete':
         controller\account::delete(); // xoá tài khoản
@@ -63,28 +63,28 @@ switch ($_SERVER['REDIRECT_URL']) {
         controller\account::get_all(); // xem tất cả các người dùng trên máy chủ
         break;
     case '/rooms':
-        controller\room::rooms(); // xem phòng thực hành do mình quản lý
+        controller\room::rooms_by_owner(); // xem phòng thực hành do mình quản lý
         break;
-    case '/rooms/all':
-        controller\room::all(); // xem tất cả các phòng thực hành
+    case '/rooms/other':
+        controller\room::rooms_not_mine(); // xem phòng thực hành của mọi người
         break;
     case '/room':
         controller\room::room(); // xem 1 phòng thực hành
         break;
-    case '/room/new':
-        controller\room::new(); // thêm phòng thực hành
+    case '/room/create':
+        controller\room::create(); // thêm phòng thực hành
         break;
-    case '/room/edit':
-        controller\room::edit(); // sửa phòng thục hành
+    case '/room/update':
+        controller\room::update(); // sửa phòng thục hành
         break;
     case '/room/delete':
         controller\room::delete(); // xoá phòng thực hành
         break;
-    case '/computer/new':
-        controller\computer::new(); // thêm máy tính vào phòng thực hành
+    case '/computer/create':
+        controller\computer::create(); // thêm máy tính vào phòng thực hành
         break;
     case '/computer/edit':
-        controller\computer::edit(); // sửa máy tính trong phòng thực hành
+        controller\computer::update(); // sửa máy tính trong phòng thực hành
         break;
     case '/computer/delete':
         controller\computer::delete(); // xoá máy tính trong phòng thực hành

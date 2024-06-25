@@ -13,9 +13,7 @@
     <h2>Tất cả các phòng</h2>
     <?php if (count($data) == 0): ?>
         <p>Không có phòng nào để hiển thị.</p>
-        <a href="/room/new"><button>Thêm phòng mới</button></a><br><br>
     <?php else: ?>
-        <a href="/room/new"><button>Thêm phòng mới</button></a><br><br>
         <table>
             <tr>
                 <td>ID phòng</td>
@@ -27,17 +25,17 @@
                 <!-- <td>Số máy</td> -->
                 <td>Hành động</td>
             </tr>
-            <?php foreach ($data as $record): ?>
+            <?php foreach ($data as $room): ?>
                 <tr>
-                    <td><?= $record['id'] ?></td>
-                    <td><?= $record['owner_id'] ?></td>
-                    <td><?= $record['name'] ?></td>
-                    <td><?= $record['position'] ?></td>
-                    <!-- <td><?= $record['description'] ?></td> -->
-                    <td><?= $record['availability'] ?></td>
-                    <!-- <td><?= $record['computers_count'] ?></td> -->
+                    <td><?= $room['room_id'] ?></td>
+                    <td><?= $room['room_owner_id'] ?></td>
+                    <td><?= $room['room_name'] ?></td>
+                    <td><?= $room['room_position'] ?></td>
+                    <!-- <td><?= $room['room_description'] ?></td> -->
+                    <td><?= $room['room_availability'] ?></td>
+                    <!-- <td><?= $room['room_computers_count'] ?></td> -->
                     <td>
-                        <a href="/room?id=<?= $record['id'] ?>"><button>Xem</button></a>
+                        <a href="/room?id=<?= $room['room_id'] ?>"><button>Xem</button></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

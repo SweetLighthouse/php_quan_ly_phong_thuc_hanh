@@ -10,3 +10,7 @@ table, tr, td {
 td {
     padding: 8px;
 }
+
+table input {
+    width: 100px;
+}

@@ -8,8 +8,10 @@
 </head>
 <body>
     <?php require_once("stuff/header.php"); ?>
-    <h2>Lỗi</h2>
-    Có lỗi xảy ra: <?= $data['message'] ?>
+    <h2>Có lỗi xảy ra.</h2>
+    <?= $data['message'] ?? '' ?>
+    <a href="javascript:history.back()">Quay lại</a>
+    <a href="/">Về trang chủ</a>
     <?php require_once("stuff/footer.php"); ?>
 </body>
 </html>

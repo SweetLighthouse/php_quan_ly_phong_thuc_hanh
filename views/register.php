@@ -5,65 +5,66 @@
     <link rel="stylesheet" href="/public/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký quản lý phòng</title>
+    <title>Đăng ký</title>
 </head>
 
 <body>
     <?php require_once ('stuff/header.php'); ?>
-
+    <h2>Đăng ký tài khoản mới</h2>
     <?= $data['message'] ?? '' ?>
 
     <script>
         function checkIfPassWordMatch() {
-            let password = document.getElementById('password');
-            let password_retype = document.getElementById('password_retype');
-            if (password.value == password_retype.value) return true;
+            let account_password = document.getElementById('account_password');
+            let account_password_retype = document.getElementById('account_password_retype');
+            if (account_password.value == account_password_retype.value) return true;
             alert('Mật khẩu phải trùng.');
             return false;
         }
     </script>
     <form action="/register" method="post" onsubmit="return checkIfPassWordMatch();">
         <h2>Đăng ký tài khoản mới</h2>
-        <label for="name">Tài khoản (*):</label>
-        <input type="text" name="name" id="name" autofocus>
-        <br><br>
-        
-        <label for="password">Mật khẩu (*):</label>
-        <input type="password" name="password" id="password">
+        <label for="account_name">Tài khoản (*):</label>
+        <input type="text" name="account_name" id="account_name" value="<?= $data['account_name'] ?? ''?>" autofocus>
         <br><br>
 
-        <label for="password_retype">Nhập lại mật khẩu:</label>
-        <input type="password" name="password_retype" id="password_retype">
+        <label for="account_password">Mật khẩu (*):</label>
+        <input type="password" name="account_password" id="account_password">
         <br><br>
 
-        <label for="full_name">Tên đầy đủ:</label>
-        <input type="text" name="full_name" id="full_name" autofocus>
+        <label for="account_password_retype">Nhập lại mật khẩu:</label>
+        <input type="password" name="account_password_retype" id="account_password_retype">
         <br><br>
 
-        <label for="birth">Ngày sinh:</label>
-        <input type="date" name="birth" id="birth">
+        <label for="account_full_name">Tên đầy đủ:</label>
+        <input type="text" name="account_full_name" id="account_full_name" value="<?= $data['account_full_name'] ?? ''?>">
         <br><br>
 
-        <label for="email">Email:</label>
-        <input type="text" name="email" id="email">
+        <label for="account_birth">Ngày sinh:</label>
+        <input type="date" name="account_birth" id="account_birth" value="<?= $data['account_birth'] ?? ''?>">
         <br><br>
 
-        <label for="position">Chức vụ:</label>
-        <input type="text" name="position" id="position">
+        <label for="account_email">Email:</label>
+        <input type="text" name="account_email" id="account_email" value="<?= $data['account_email'] ?? ''?>">
         <br><br>
 
-        <label for="gender">Giới tính:</label>
-        <select name="gender" id="gender">
-            <option value="male">Nam</option>
-            <option value="female">Nữ</option>
-            <option value="other">Khác</option>
+        <label for="account_position">Chức vụ:</label>
+        <input type="text" name="account_position" id="account_position" value="<?= $data['account_postiion'] ?? ''?>">
+        <br><br>
+
+        <label for="account_gender">Giới tính:</label>
+        <select name="account_gender" id="account_gender">
+            <option value="male" <?= isset($data['account_gender']) && $data['account_gender'] == 'male' ? 'checked' : '' ?>>Nam</option>
+            <option value="female" <?= isset($data['account_gender']) && $data['account_gender'] == 'female' ? 'checked' : '' ?>>Nữ</option>
+            <option value="other" <?= isset($data['account_gender']) && $data['account_gender'] == 'other' ? 'checked' : '' ?>>Khác</option>
         </select>
         <br><br>
 
         <input type="submit" value="Đăng ký">
 
         <p>Dấu sao ( * ) có nghĩa là bắt buộc.</p>
-        <p>Tài khoản và mật khẩu dài từ 3 - 60 ký tự, chỉ bao gồm chữ cái hoa, thường, số, gạch ngang - và gạch dưới _ </p>
+        <p>Tài khoản và mật khẩu dài từ 3 - 60 ký tự, chỉ bao gồm chữ cái hoa, thường, số, gạch ngang - và gạch dưới _
+        </p>
 
     </form>
     <?php require_once ('stuff/footer.php'); ?>

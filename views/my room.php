@@ -28,6 +28,7 @@
             <td>Màn hình</td>
             <td>Ghi chú</td>
             <td>Khả dụng</td>
+            <td>Hành động</td>
         </tr>
         <?php if (isset($data['computers'])): ?>
             <?php foreach ($data['computers'] as $computer): ?>
@@ -40,16 +41,36 @@
                     <td><?= $computer['computer_monitor'] ?></td>
                     <td><?= $computer['computer_note'] ?></td>
                     <td><?= $computer['computer_availability'] ?></td>
+                    <td>
+                        <a style="display: inline;" href="/computer/edit?id=<?= $computer['computer_id'] ?>"><button>Sửa</button></a>
+                        <form action="/computer/delete" method="post" style="display: inline-block;">
+                            <button name="computer_id" value="<?= $computer['computer_id'] ?>" type="submit">Xoá</button>
+                        </form>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
+        <form method="post" action="/computer/create">
+            <tr>
+                <td></td>
+                <td><input type="text" name="computer_name" id="computer_name"></td>
+                <td><input type="text" name="computer_ram" id="computer_ram"></td>
+                <td><input type="text" name="computer_cpu" id="computer_cpu"></td>
+                <td><input type="text" name="computer_vga" id="computer_vga"></td>
+                <td><input type="text" name="computer_monitor" id="computer_monitor"></td>
+                <td><input type="text" name="computer_note" id="computer_note"></td>
+                <td><select name="computer_availability" id="computer_availability">
+                        <option value="1">Có</option>
+                        <option value="0">Không</option>
+                    </select></td>
+                <td><button name="computer_room_id" value="<?= $data['room']['room_id'] ?>" type="submit">Thêm</button></td>
+            </tr>
+        </form>
     </table>
     <br>
-    <?php if (isset($data['editable'])): ?>
-        <a href="/room/edit?id=<?= $data['id'] ?>"><button>Sửa thông tin phòng</button></a>
-        <a href="/room/delete?id=<?= $data['id'] ?>"><button>Xoá phòng</button></a>
-    <?php endif; ?>
-    <a href="javascript:history.back()">Quay lại</a>
+    <a href="/room/update?id=<?= $data['room']['room_id'] ?>"><button>Sửa thông tin phòng</button></a>
+    <a href="/room/delete?id=<?= $data['room']['room_id'] ?>"><button>Xoá phòng</button></a>
+    <a href="javascript:history.back()"><button type="button">Quay lại</button></a>
     <?php require_once ('stuff/footer.php'); ?>
 </body>
 
