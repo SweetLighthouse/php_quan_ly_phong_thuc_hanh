@@ -17,8 +17,8 @@
 
         <label for="room_id">ID phòng: </label>
         <select name="room_id" id="room_id">
-            <?php foreach ($data['room_id_list'] as $k => $v) : ?>
-                <option value="<?= $v['id'] ?>"><?= "$v[id] - $v[name]" ?></option>
+            <?php foreach ($data['room_id_list'] as $k => $room) : ?>
+                <option value="<?= $room['id'] ?>"><?= "$room[id] - $room[name]" ?></option>
             <?php endforeach; ?>
         </select><br><br>
         <label for="name">Tên máy: </label>

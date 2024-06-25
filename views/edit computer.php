@@ -14,6 +14,13 @@
     <form action="/computer/edit" method="post">
         <h2>Sửa thông tin máy tính</h2>
 
+        <label for="room_id">ID phòng: </label>
+        <select name="room_id" id="room_id">
+            <?php foreach ($data['room_list'] as $room) : ?>
+                <option value="<?= $room['id'] ?>"><?= "$room[id] - $room[name]" ?></option>
+            <?php endforeach; ?>
+        </select><br><br>
+
         <input type="hidden" name="id" value="<?= $data['id'] ?? '' ?>">
         
         <label for="name">Tên máy: </label>

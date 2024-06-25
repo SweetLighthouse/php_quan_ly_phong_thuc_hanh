@@ -23,24 +23,23 @@ class computer extends \SWLH\core\controller
     static function edit()
     {
         $id = $_POST['id'] ?? $_GET['id'];
-
         $allowed_to_modify = false;
-        $room_id = \SWLH\model\computer::get($id)['room_id'];
-        foreach (\SWLH\model\room::get_by_owner() as $room) {
-            if($room_id == $room['id']) $allowed_to_modify = true;
-        }
+        $edited_room = \SWLH\model\computer::get($id);
+        $rooms = \SWLH\model\room::get_by_owner();
+        foreach ($rooms as $room) if($edited_room['id'] == $room['id']) $allowed_to_modify = true;
         if(!$allowed_to_modify) self::render('404.php', ['message' => 'Bạn không có đủ thẩm quyền để sửa máy ở vào phòng đã cho.']);
         switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
-            self::render('edit computer.php', \SWLH\model\computer::get($id));
+            $data = $edited_room;
+            $data['room_list'] = $rooms;
+            self::render('edit computer.php', $data);
             break;
         case 'POST':
             if(!\SWLH\model\computer::update($_POST)) {
                 $_POST['message'] = 'Có lỗi xảy ra.';
                 self::render('edit computer.php', $_POST);
             }
-            $redirect = \SWLH\model\computer::get($id)['room_id'];
-            header("Location: /room?id=$redirect");
+            header("Location: /room?id=$_POST[room_id]");
             break;
         }
     }
