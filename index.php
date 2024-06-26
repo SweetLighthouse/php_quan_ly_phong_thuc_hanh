@@ -83,11 +83,20 @@ switch ($_SERVER['REDIRECT_URL']) {
     case '/computer/create':
         controller\computer::create(); // thêm máy tính vào phòng thực hành
         break;
-    case '/computer/edit':
+    case '/computer/update':
         controller\computer::update(); // sửa máy tính trong phòng thực hành
         break;
     case '/computer/delete':
         controller\computer::delete(); // xoá máy tính trong phòng thực hành
+        break;
+    case '/request/create':
+        controller\request::create(); // tạo request thuê phòng
+        break;
+    case '/request/update':
+        controller\request::update(); // tạo request thuê phòng
+        break;
+    case '/request/delete':
+        controller\request::delete(); // tạo request thuê phòng
         break;
     default:
         \SWLH\core\controller::render('404.php', ['message' => 'Đường dẫn không tồn tại.']);

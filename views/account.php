@@ -15,6 +15,7 @@
     <p>Email: <?= $data['account_email'] ?? '' ?></p>
     <p>Chức vụ: <?= $data['account_position'] ?? '' ?></p>
     <p>Giới tính: <?= $data['account_gender'] ?? '' ?></p>
+    <a href="javascript:history.back()"><button type="button">Quay lại</button></a>
     <?php require_once ('stuff/footer.php'); ?>
 </body>
 

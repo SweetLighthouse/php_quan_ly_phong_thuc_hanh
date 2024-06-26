@@ -27,15 +27,16 @@
             </tr>
             <?php foreach ($data as $room): ?>
                 <tr>
-                    <td><?= $room['room_id'] ?></td>
-                    <td><?= $room['room_owner_id'] ?></td>
-                    <td><?= $room['room_name'] ?></td>
-                    <td><?= $room['room_position'] ?></td>
-                    <!-- <td><?= $room['room_description'] ?></td> -->
-                    <td><?= $room['room_availability'] ?></td>
-                    <!-- <td><?= $room['room_computers_count'] ?></td> -->
+                    <td><?= $room['room_id'] ?? '' ?></td>
+                    <td><a href="/account?id=<?= $room['room_owner_id'] ?? '' ?>"><?= $room['room_owner_id'] ?? '' ?></a></td>
+                    <td><?= $room['room_name'] ?? '' ?></td>
+                    <td><?= $room['room_position'] ?? '' ?></td>
+                    <!-- <td><?= $room['room_description'] ?? '' ?></td> -->
+                    <td><?= $room['room_availability'] ?? '' ?></td>
+                    <!-- <td><?= $room['room_computers_count'] ?? '' ?></td> -->
                     <td>
-                        <a href="/room?id=<?= $room['room_id'] ?>"><button>Xem</button></a>
+                        <a href="/room?id=<?= $room['room_id'] ?? '' ?>"><button>Xem</button></a>
+                        <a href="/request/create?room_id=<?= $room['room_id'] ?? '' ?>"><button>Thuê</button></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

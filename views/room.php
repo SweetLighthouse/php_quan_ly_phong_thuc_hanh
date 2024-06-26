@@ -11,6 +11,7 @@
 <body>
     <?php require_once ('stuff/header.php'); ?>
     <h2>Thông tin phòng <?= $data['room']['room_name'] ?? '' ?></h2>
+    <p>ID chủ sở hữu: <a href="/account?id=<?= $data['room']['room_owner_id'] ?? '' ?>"><?= $data['room']['room_owner_id'] ?? '' ?></a></p>
     <p>ID: <?= $data['room']['room_id'] ?? '' ?></p>
     <p>Tên phòng: <?= $data['room']['room_name'] ?? '' ?></p>
     <p>Vị trí phòng: <?= $data['room']['room_position'] ?? '' ?></p>
@@ -49,7 +50,7 @@
         <a href="/room/edit?id=<?= $data['id'] ?>"><button>Sửa thông tin phòng</button></a>
         <a href="/room/delete?id=<?= $data['id'] ?>"><button>Xoá phòng</button></a>
     <?php endif; ?>
-    <a href="javascript:history.back()">Quay lại</a>
+    <a href="javascript:history.back()"><button type="button">Quay lại</button></a>
     <?php require_once ('stuff/footer.php'); ?>
 </body>
 

@@ -38,7 +38,7 @@ class computer extends \SWLH\core\controller
                 $_POST['message'] = 'Có lỗi xảy ra.';
                 static::render('update computer.php', $_POST);
             }
-            header("Location: /room?id=$_POST[computer_id]");
+            header("Location: /room?id=$_POST[computer_room_id]");
             break;
         }
     }

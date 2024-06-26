@@ -42,7 +42,7 @@
                     <td><?= $computer['computer_note'] ?></td>
                     <td><?= $computer['computer_availability'] ?></td>
                     <td>
-                        <a style="display: inline;" href="/computer/edit?id=<?= $computer['computer_id'] ?>"><button>Sửa</button></a>
+                        <a style="display: inline;" href="/computer/update?id=<?= $computer['computer_id'] ?>"><button>Sửa</button></a>
                         <form action="/computer/delete" method="post" style="display: inline-block;">
                             <button name="computer_id" value="<?= $computer['computer_id'] ?>" type="submit">Xoá</button>
                         </form>

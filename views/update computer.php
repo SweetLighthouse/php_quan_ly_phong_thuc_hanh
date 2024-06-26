@@ -11,12 +11,14 @@
 <body>
     <?php require_once ('stuff/header.php'); ?>
     <?= $data['message'] ?? '' ?>
-    <form action="/computer/edit" method="post">
+    <form action="/computer/update" method="post">
         <h2>Sửa thông tin máy tính</h2>
         <label for="computer_room_id">ID phòng: </label>
         <select name="computer_room_id" id="computer_room_id">
             <?php foreach ($data['rooms'] as $room) : ?>
-                <option value="<?= $room['room_id'] ?>"><?= "$room[room_id] - $room[room_name]" ?></option>
+                <option value="<?= $room['room_id'] ?>" <?= $room['room_id'] == $data['computer_room_id'] ? 'selected': '' ?>>
+                    <?= "$room[room_id] - $room[room_name]" ?>
+                </option>
             <?php endforeach; ?>
         </select><br><br>
 

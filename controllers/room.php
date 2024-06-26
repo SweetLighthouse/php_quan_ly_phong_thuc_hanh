@@ -10,7 +10,7 @@ class room extends \SWLH\core\controller
         $rooms = \SWLH\model\room::read_all();
         foreach($rooms as $key => $room) if ($room['room_owner_id'] == $_SESSION['account_id']) unset($rooms[$key]);
         foreach ($rooms as &$room) $room['room_availability'] = ['0' => 'Không', '1' => 'Có'][$room['room_availability']];
-        static::render('all rooms.php', $rooms);
+        static::render('other rooms.php', $rooms);
     }
     static function rooms_by_owner()
     {
