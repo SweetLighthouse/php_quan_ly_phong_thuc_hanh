@@ -17,7 +17,7 @@ class request extends \SWLH\core\controller
     }
     protected static function validate($data)
     {
-        if(!isset($data['request_from_time']) || !isset($data['request_to_time']) || !isset($data['request_room_id']) || !isset($data['request_account_id'])) return false;
+        if(!isset($data['request_from_time']) || !isset($data['request_to_time']) || !isset($data['request_room_id']) || !isset($data['request_account_id']) || !isset($data['request_reason'])) return false;
         return true;
     }
     static function create()
@@ -57,7 +57,7 @@ class request extends \SWLH\core\controller
         $request = \SWLH\model\request::read($request_id);
         if(!$request) static::render('404.php', ['message' => 'Không tìm thấy yêu cầu với ID đã cho.']);
         if($request['request_approved'] != -1) static::render('404.php', ['message' => 'Không còn có thể chỉnh sửa yêu cầu này.']);
-        $approved = $_GET['request_approved'] ?? '';
+        $approved = $_GET['approved'] ?? '';
         $type = '';
         if ($request['request_account_id'] == $_SESSION['account_id']) {
             $type = 'creator'; // authenticated as creator of the request

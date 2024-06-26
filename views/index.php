@@ -9,7 +9,6 @@
 </head>
 
 <body>
-    <!-- <?= var_dump($data) ?> -->
     <?php require_once ('stuff/header.php'); ?>
     <?= $data['message'] ?? '' ?>
 
@@ -19,8 +18,9 @@
             <tr>
                 <td>ID phòng yêu cầu</td>
                 <td>ID người yêu cầu</td>
-                <td>Yêu cầu dùng từ lúc</td>
-                <td>Yêu cầu dùng đến lúc</td>
+                <td>Từ lúc</td>
+                <td>Đến lúc</td>
+                <td>Lý do</td>
                 <td>Đồng ý?</td>
             </tr>
             <?php foreach ($data['in_requests'] as $in_request): ?>
@@ -29,6 +29,7 @@
                     <td><a href="/account?id=<?= $in_request['request_account_id'] ?? '' ?>"><?= $in_request['request_account_id'] ?? '' ?></a></td>
                     <td><?= $in_request['request_from_time'] ?? '' ?></td>
                     <td><?= $in_request['request_to_time'] ?? '' ?></td>
+                    <td><?= $in_request['request_reason'] ?? '' ?></td>
                     <td>
                         <a href="/request/update?id=<?= $in_request['request_id'] ?>&approved=1"><button>Có</button></a>
                         <a href="/request/update?id=<?= $in_request['request_id'] ?>&approved=0"><button>Không</button></a>
@@ -47,8 +48,9 @@
             <tr>
                 <td>ID phòng yêu cầu</td>
                 <td>ID người yêu cầu</td>
-                <td>Yêu cầu dùng từ lúc</td>
-                <td>Yêu cầu dùng đến lúc</td>
+                <td>Từ lúc</td>
+                <td>Đến lúc</td>
+                <td>Lý do</td>
                 <td>Trả lời</td>
             </tr>
             <?php foreach ($data['resolved_requests'] as $in_request): ?>
@@ -57,8 +59,9 @@
                     <td><a href="/account?id=<?= $in_request['request_account_id'] ?? '' ?>"><?= $in_request['request_account_id'] ?? '' ?></a></td>
                     <td><?= $in_request['request_from_time'] ?? '' ?></td>
                     <td><?= $in_request['request_to_time'] ?? '' ?></td>
+                    <td><?= $in_request['request_reason'] ?? '' ?></td>
                     <td>
-                        <?= isset($in_request['request_to_time']) && $in_request['request_to_time'] == '1' ? 'Có' : 'Không' ?>
+                        <?= isset($in_request['request_approved']) && $in_request['request_approved'] == 1 ? 'Có' : 'Không' ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -76,6 +79,7 @@
                 <td>ID phòng yêu cầu</td>
                 <td>Từ lúc</td>
                 <td>Đến lúc</td>
+                <td>Lý do mượn</td>
                 <td>Ý kiến chủ phòng</td>
                 <td>Hành động</td>
             </tr>
@@ -84,6 +88,7 @@
                     <td><a href="/room?id=<?= $out_request['request_room_id'] ?? '' ?>"><?= $out_request['request_room_id'] ?? '' ?></a></td>
                     <td><?= $out_request['request_from_time'] ?? '' ?></td>
                     <td><?= $out_request['request_to_time'] ?? '' ?></td>
+                    <td><?= $out_request['request_reason'] ?? '' ?></td>
                     <td>
                         <?php 
                         if (isset($out_request['request_approved'])) {

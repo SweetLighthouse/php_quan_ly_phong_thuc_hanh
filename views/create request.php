@@ -21,6 +21,9 @@
         <label for="request_to_time">Thuê phòng đến lúc: </label>
         <input type="datetime-local" name="request_to_time" id="request_to_time" value="<?= $data['request_to_time'] ?? '' ?>"><br><br>
 
+        <label for="request_to_time">Lý do: </label><br>
+        <textarea name="request_reason" id="request_reason" cols="30" rows="10"><?= $data['request_reason'] ?? '' ?></textarea><br><br>
+
         <button name="request_room_id" value="<?= $data['request_room_id'] ?? '' ?>" type="submit">Gửi yêu cầu</button>
         <a href="javascript:history.back()"><button type="button">Huỷ, quay lại</button></a>
     </form>

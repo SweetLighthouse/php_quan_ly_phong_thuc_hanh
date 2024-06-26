@@ -32,6 +32,7 @@
                     <!-- <td><?= $room['room_computers_count'] ?></td> -->
                     <td>
                         <a href="/room?id=<?= $room['room_id'] ?>"><button>Xem</button></a>
+                        <a href="/request/create?room_id=<?= $room['room_id'] ?>"><button>Thuê</button></a>
                     </td>
                 </tr>
             <?php endforeach; ?>

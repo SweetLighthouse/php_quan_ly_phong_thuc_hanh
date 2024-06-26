@@ -19,7 +19,6 @@ class computer extends \SWLH\core\controller
     }
     static function update()
     {
-        echo var_dump($_POST);
         $id = $_POST['computer_id'] ?? $_GET['id'] ?? '';
         $allowed_to_modify = false;
         if($id == '') static::render('404.php', ['message'=> 'Không thể để trống ID.']);

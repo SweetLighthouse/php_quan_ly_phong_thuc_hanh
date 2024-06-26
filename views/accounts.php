@@ -22,7 +22,8 @@
                 <td><?= $room['account_name'] ?? '' ?></td>
                 <td><?= $room['account_full_name'] ?? '' ?></td>
                 <td>
-                    <a href="/account?id=<?= $room['account_id'] ?? '' ?>"><button>Xem</button></a>
+                    <a href="/account?id=<?= $room['account_id'] ?? '' ?>"><button>Xem tài khoản</button></a>
+                    <a href="/rooms?owner_id=<?= $room['account_id'] ?? '' ?>"><button>Xem các phòng</button></a>
                 </td>
             </tr>
         <?php endforeach; ?>

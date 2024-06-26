@@ -12,23 +12,25 @@ class request extends \SWLH\core\model
 
     static function create(array $data)
     {
-        $stmt = static::$conn->prepare("insert into requests (request_account_id, request_room_id, request_from_time, request_to_time, request_approved) values (?, ?, ?, ?, ?)");
+        $stmt = static::$conn->prepare("insert into requests (request_account_id, request_room_id, request_from_time, request_to_time, request_reason, request_approved) values (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param(
-            "iissi",
+            "iisssi",
             $data['request_account_id'],
             $data['request_room_id'],
             $data['request_from_time'],
             $data['request_to_time'],
+            $data['request_reason'],
             $data['request_approved']
         );
         return $stmt->execute();
     }
     static function update(array $data)
     {
-        $stmt = static::$conn->prepare("update requests set request_from_time = ?, request_to_time = ?, request_approved = ? where request_id = ? limit 1");
-        $stmt->bind_param("ssii", 
+        $stmt = static::$conn->prepare("update requests set request_from_time = ?, request_to_time = ?, request_reason = ?, request_approved = ? where request_id = ? limit 1");
+        $stmt->bind_param("sssii", 
             $data['request_from_time'],
             $data['request_to_time'],
+            $data['request_reason'],
             $data['request_approved'],
             $data['request_id']
         );

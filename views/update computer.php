@@ -69,7 +69,7 @@
         </script>
 
         <button type="submit" name="computer_id" value="<?= $data['computer_id'] ?? '' ?>">Sửa máy</button>
-        <a href="/rooms">Huỷ</a>
+        <a href="javascript:history.back()"><button type="button">Huỷ, quay lại</button></a>
     </form>
     <?php require_once ('stuff/footer.php'); ?>
 

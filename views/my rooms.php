@@ -41,7 +41,7 @@
         </table>
     <?php else: ?>
         <p>Không có phòng nào để hiển thị.</p>
-        <a href="/room/new"><button>Thêm phòng mới</button></a><br><br>
+        <a href="/room/create"><button>Thêm phòng mới</button></a><br><br>
     <?php endif; ?>
     <?php require_once ("stuff/footer.php"); ?>
 </body>
