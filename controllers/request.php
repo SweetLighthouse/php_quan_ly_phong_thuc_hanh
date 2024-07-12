@@ -17,8 +17,11 @@ class request extends \SWLH\core\controller
     }
     protected static function validate($data)
     {
-        if(!isset($data['request_from_time']) || !isset($data['request_to_time']) || !isset($data['request_room_id']) || !isset($data['request_account_id']) || !isset($data['request_reason'])) return false;
-        return true;
+        $message = '';
+        if(!isset($data['request_from_time']) || !isset($data['request_to_time']) || !isset($data['request_room_id']) || !isset($data['request_account_id']) || !isset($data['request_reason']))
+            $message .= 'Không được để trống trường nào. ';
+        if($data['request_from_time'] >= $data['request_to_time']) $message .= 'Thời gian bắt đầu không thể muộn hơn thời gian kết thúc. ';
+        return $message;
     }
     static function create()
     {
@@ -34,9 +37,9 @@ class request extends \SWLH\core\controller
         case 'POST':
             $_POST['request_account_id'] = $_SESSION['account_id'];
             $_POST['request_approved'] = -1;
-            var_dump($_POST);
-            if(!static::validate($_POST)) {
-                $_POST['message'] = 'Dữ liệu không hợp lệ.';
+            $validate_message = static::validate($_POST);
+            if($validate_message) {
+                $_POST['message'] = $validate_message;
                 static::render('create request.php', $_POST);
             }
             if(!\SWLH\model\request::create($_POST)) {
@@ -83,8 +86,9 @@ class request extends \SWLH\core\controller
                 $_POST['request_room_id'] = $request['request_room_id'];
                 $_POST['request_approved'] = $request['request_approved'];
                 var_dump($_POST);
-                if(!static::validate($_POST)) {
-                    $_POST['message'] = 'Dữ liệu không hợp lệ.';
+                $validate_message = static::validate($_POST);
+                if($validate_message) {
+                    $_POST['message'] = $validate_message;
                     static::render('update request.php', $_POST);
                 }
                 if(!\SWLH\model\request::update($_POST)) {

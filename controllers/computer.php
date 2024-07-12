@@ -4,13 +4,22 @@ namespace SWLH\controller;
 
 class computer extends \SWLH\core\controller
 {
+    static protected function validate($data)
+    {
+        $message = '';
+        if (isset($data['computer_name']) && $data['computer_name'] == '') $message .= 'Không thể để trống tên máy.';
+        return $message;
+    }
     static function create()
     {
         if($_SERVER['REQUEST_METHOD'] != 'POST') static::render('404.php', ['message' => 'Sai phương thức truy nhập.']);
         // check if the user has right to add new computer by making sure the logged in user owns the room which is going to be added a new computer
         foreach (\SWLH\model\room::read_by_owner_id($_SESSION['account_id']) as $room) {
             if($_POST['computer_room_id'] == $room['room_id']) {
-                \SWLH\model\computer::create($_POST);
+                $validate_message = static::validate($_POST);
+                //window.location.href = '/room?id=$_POST[computer_room_id]';
+                if($validate_message) die("<script>alert('$validate_message'); javascript:history.back(); </script>");
+                if(!\SWLH\model\computer::create($_POST)) die("<script>alert('Có lỗi khi thêm máy.'); javascript:history.back();</script>");
                 header("Location: /room?id=$_POST[computer_room_id]");
             }
         }

@@ -21,6 +21,7 @@
         <br><br>
         <input type="submit" value="Đăng nhập"><br>
     </form>
+    <br>
     <?= $data['message'] ?? '' ?>
     <?php require_once ('stuff/footer.php'); ?>
 </body>

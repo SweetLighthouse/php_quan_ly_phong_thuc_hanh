@@ -23,7 +23,6 @@
         }
     </script>
     <form action="/register" method="post" onsubmit="return checkIfPassWordMatch();">
-        <h2>Đăng ký tài khoản mới</h2>
         <label for="account_name">Tài khoản (*):</label>
         <input type="text" name="account_name" id="account_name" value="<?= $data['account_name'] ?? ''?>" autofocus>
         <br><br>

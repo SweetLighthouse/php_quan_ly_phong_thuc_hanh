@@ -45,7 +45,6 @@ if (!model\token::validate()) {
 switch ($_SERVER['REDIRECT_URL']) {
     case '/logout':
         controller\account::logout(); // đăng xuất
-        header('Location: /login');
         break;
     case '/':
         controller\home::index(); // trang chủ

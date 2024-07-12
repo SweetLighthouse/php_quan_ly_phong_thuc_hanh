@@ -38,7 +38,7 @@
         <br><br>
         
         <input type="submit" value="Sửa phòng">
-        <a href="javascript:history.back()"><button>Huỷ, quay lại</button></a>
+        <a href="/rooms"><button type="button">Huỷ, quay lại</button></a>
     </form>
     <?php require_once ('stuff/footer.php'); ?>
 

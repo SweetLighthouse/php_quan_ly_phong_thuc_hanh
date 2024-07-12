@@ -15,6 +15,8 @@
     <form action="/request/create" method="post">
         <h2>Nhập thông tin để yêu cầu sử dụng phòng.</h2>
 
+        <p>ID phòng: <a href="/room?id=<?= $data['request_room_id'] ?? '' ?>"><?= $data['request_room_id'] ?? '' ?></a></p>
+
         <label for="request_from_time">Thuê phòng từ lúc: </label>
         <input type="datetime-local" name="request_from_time" id="request_from_time" value="<?= $data['request_from_time'] ?? '' ?>"><br><br>
 

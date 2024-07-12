@@ -48,7 +48,7 @@ class account extends \SWLH\core\controller
         ) $message .= 'Không được để trống trường nào. ';
         if (!preg_match('/[0-9a-zA-Z-_]{3,60}/', $data['account_name'])) $message .= 'Tên tài khoản không đúng cú pháp. ';
         if (!preg_match('/[0-9a-zA-Z-_]{3,60}/', $data['account_password'])) $message .= 'Mật khẩu không đúng cú pháp. ';
-        if ($data['account_birth'] < "1900-01-01") $message .= 'Ngày sinh có vấn đề. ';
+        if ($data['account_birth'] < "1900-01-01" || $data['account_birth'] > date('Y-m-d')) $message .= 'Ngày sinh có vấn đề. ';
         if (!filter_var($data['account_email'], FILTER_VALIDATE_EMAIL)) $message .= 'Email không hợp lệ. ';
         return $message;
     }
@@ -85,6 +85,7 @@ class account extends \SWLH\core\controller
     {
         \SWLH\model\token::delete();
         session_destroy(); // might be redundant since there is a session_unset inside token::delete
+        header('Location: /login');
     }
     static function read()
     {

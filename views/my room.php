@@ -53,15 +53,15 @@
         <form method="post" action="/computer/create">
             <tr>
                 <td></td>
-                <td><input type="text" name="computer_name" id="computer_name"></td>
-                <td><input type="text" name="computer_ram" id="computer_ram"></td>
-                <td><input type="text" name="computer_cpu" id="computer_cpu"></td>
-                <td><input type="text" name="computer_vga" id="computer_vga"></td>
-                <td><input type="text" name="computer_monitor" id="computer_monitor"></td>
-                <td><input type="text" name="computer_note" id="computer_note"></td>
+                <td><input type="text" name="computer_name" id="computer_name" value="<?= $data['new_computer']['computer_name'] ?? '' ?>"></td>
+                <td><input type="text" name="computer_ram" id="computer_ram" value="<?= $data['new_computer']['computer_ram'] ?? '' ?>"></td>
+                <td><input type="text" name="computer_cpu" id="computer_cpu" value="<?= $data['new_computer']['computer_cpu'] ?? '' ?>"></td>
+                <td><input type="text" name="computer_vga" id="computer_vga" value="<?= $data['new_computer']['computer_vga'] ?? '' ?>"></td>
+                <td><input type="text" name="computer_monitor" id="computer_monitor" value="<?= $data['new_computer']['computer_monitor'] ?? '' ?>"></td>
+                <td><input type="text" name="computer_note" id="computer_note" value="<?= $data['new_computer']['computer_note'] ?? '' ?>"></td>
                 <td><select name="computer_availability" id="computer_availability">
-                        <option value="1">Có</option>
-                        <option value="0">Không</option>
+                        <option value="1" <?= isset($data['new_computer']['availability']) && $data['new_computer']['availability'] == '1' ? 'checked' : '' ?>>Có</option>
+                        <option value="0" <?= isset($data['new_computer']['availability']) && $data['new_computer']['availability'] == '0' ? 'checked' : '' ?>>Không</option>
                     </select></td>
                 <td><button name="computer_room_id" value="<?= $data['room']['room_id'] ?>" type="submit">Thêm</button></td>
             </tr>

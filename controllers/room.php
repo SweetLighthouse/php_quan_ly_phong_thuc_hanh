@@ -40,13 +40,13 @@ class room extends \SWLH\core\controller
     static protected function validate(array $data)
     {
         $message = '';
-        if (
-            !isset($data['room_name']) || 
-            !isset($data['room_position']) || 
-            !isset($data['room_description']) || 
-            !isset($data['room_availability']) || 
-            !isset($data['room_owner_id'])
-        ) $message .= 'Không được để trống trường nào. ';
+        if(isset($data['room_name']) && $data['room_name'] == '') $message .= 'Không được để trống tên.';
+        // if (
+        //     !isset($data['room_position']) || 
+        //     !isset($data['room_description']) || 
+        //     !isset($data['room_availability']) || 
+        //     !isset($data['room_owner_id'])
+        // ) $message .= 'Không được để trống trường nào. ';
         return $message;
     }
     static function create() 
@@ -82,7 +82,6 @@ class room extends \SWLH\core\controller
         $room = \SWLH\model\room::read($room_id);
         if(!$room) static::render('404.php', ['message' => 'Không tìm thấy phòng với ID đã cho.']);
         if ($room['room_owner_id'] != $_SESSION['account_id']) static::render('404.php', ['message' => 'Bạn không có quyền để sửa phòng này. ']);
-        // die(var_dump($room));
         $room['room_owner_id'] = $_SESSION['account_id'];
         switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':  
@@ -90,10 +89,17 @@ class room extends \SWLH\core\controller
             break;
         case 'POST':
             $_POST['room_owner_id'] = $room['room_owner_id'];
-            if (\SWLH\model\room::update($_POST))
-                header("Location: /rooms");
-            $_POST['message'] = 'Thất bại.';
-            static::render('edit room.php', $_POST); 
+            $validate_message = static::validate($_POST);
+            if ($validate_message) {
+                $_POST['message'] = $validate_message;
+                static::render('update room.php', $_POST);
+            }
+            if (!\SWLH\model\room::update($_POST)) {
+                $_POST['message'] = 'Thất bại.';
+                static::render('edit room.php', $_POST); 
+            }
+            // die('<script>javascript:history.back()</script>');
+            header("Location: /rooms");
             break;
         }
     }
